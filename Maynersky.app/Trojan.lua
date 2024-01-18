@@ -9,7 +9,7 @@ local color = "emlpdr"
 local Code = [[
  
 local textLines = {
-  "An a critical error occured and your MineOSOS has been Destroyed",
+  "An a critical error occured and your MineOS has been Destroyed",
   "Try to restart your computer If this screen appears again Try to do this",
   "1 Purchase normal computer",
   "2 Use new BIOS",
