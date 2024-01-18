@@ -123,3 +123,5 @@ while true do
   print(str)
   computer.beep(1000, 0.1)
 end
+
+computer.shutdown(true)
