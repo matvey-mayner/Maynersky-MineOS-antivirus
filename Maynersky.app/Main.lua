@@ -29,6 +29,7 @@ local systemFiles = {
   "usr",
   "init.lua",
   "OS.lua",
+  "/",
   "versions.cfg"
 }
 local virusDelSystemFiles = {}
