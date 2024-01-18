@@ -1,11 +1,11 @@
 {
   openScript = "Проверить скрипт",
-  open1 = "Открыть",
+  open1 = "Проверить",
   cancel = "Отмена",
   appName = "Имя Софта",
   scriptName = "Имя скрипта",
-  canFlashTheEEPROM = "Может прошивать EЕПРОМ",
-  canDeleteSystemFiles = "Может удалять Системные файлы:",
+  canFlashTheEEPROM = "Способен прошивать EEPROM",
+  canDeleteSystemFiles = "Способен удалить Системные файлы:",
   virusNotFound = "Вирусов не найдено!",
   virusFound = "ВИРУС НАЙДЕН:"
 }
