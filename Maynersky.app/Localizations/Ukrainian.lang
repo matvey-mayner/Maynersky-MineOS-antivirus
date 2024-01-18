@@ -1,0 +1,11 @@
+{
+  openScript = "Перевірити файл",
+  open1 = "Перевірити цей файл!",
+  cancel = "Скасувати",
+  appName = "Ім'я Софта",
+  scriptName = "Ім'я скрипту",
+  canFlashTheEEPROM = "Здатний прошивати EEPROM",
+  canDeleteSystemFiles = "Здатний видалити Системні файли:",
+  virusNotFound = "Троянов не знайдено!",
+  virusFound = "Троян знайдено:"
+}
