@@ -6,6 +6,6 @@
   scriptName = "Имя скрипта",
   canFlashTheEEPROM = "Способен прошивать EEPROM",
   canDeleteSystemFiles = "Способен удалить Системные файлы:",
-  virusNotFound = "Torjan не найдено!",
-  virusFound = "Trojan найден:"
+  virusNotFound = "Троянов не найдено!",
+  virusFound = "Троян найден:"
 }
